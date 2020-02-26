@@ -2,3 +2,5 @@
 {% for line in lyrics %}
 {{ line }}<br>
 {% endfor %}
+
+<h3>Share your masterpiece with others at this URL! <a href="{{ url_for('display_lyrics', url=url, _external=True) }}">{{ url_for('display_lyrics', url=url, _external=True) }}</a></h3>
