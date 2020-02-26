@@ -11,7 +11,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 # db.init_app(app)
 
-from .models import Lyrics
+from models import Lyrics
 
 
 @app.route('/')
