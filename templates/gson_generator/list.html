@@ -22,7 +22,7 @@
 {% endfor %}
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-end">
-        {% for page_num in listing.iter_pages(left_edge=2, right_edge=2, left_current=3, right_current=3) %}
+        {% for page_num in listing.iter_pages(left_edge=2, right_edge=2, left_current=3, right_current=4) %}
         {% if page_num %}
         {% if listing.page == page_num %}
         <li class="page-item active"><span class="page-link">{{ page_num }} <span class="sr-only">(current)</span></span></li>
