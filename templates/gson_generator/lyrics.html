@@ -1,6 +1,19 @@
-<h1>{{ title }}</h1>
-{% for line in lyrics %}
+{% extends 'gson_generator/base.html' %}
+
+{% block content %}
+<h1>{{ lyrics.title }}</h1>
+{% for line in lyrics.lyrics %}
 {{ line }}<br>
 {% endfor %}
 
-<h3>Share your masterpiece with others at this URL! <a href="{{ url_for('display_lyrics', url=url, _external=True) }}">{{ url_for('display_lyrics', url=url, _external=True) }}</a></h3>
+<br>
+<small class="my-5 py-5">Lyrics generated on {{ lyrics.date_created.strftime('%Y-%m-%d') }}. This page has been viewed {{ lyrics.visits }} times.</small>
+<br><br>
+
+<h3>Share your masterpiece with others at this URL! <a href="{{ url_for('display_lyrics', url=lyrics.url, _external=True) }}">{{
+    url_for('display_lyrics', url=lyrics.url, _external=True) }}</a></h3>
+
+<form method="POST" action="{{ url_for('generate_lyrics') }}">
+    <input type="submit" value="Generate New Lyrics!" class="btn btn-primary btn-lg btn-block mb-5">
+</form>
+{% endblock %}
