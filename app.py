@@ -12,8 +12,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 # db.init_app(app)
 
-from .models import Lyrics
-from .utils import generate_lyric_segment, generate_chorus
+from models import Lyrics
+from utils import generate_lyric_segment, generate_chorus
 
 
 @app.route('/')

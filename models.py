@@ -2,7 +2,7 @@ from datetime import datetime
 from sqlalchemy.types import ARRAY
 import secrets
 
-from .app import db
+from app import db
 
 
 class Lyrics(db.Model):
