@@ -46,6 +46,7 @@ def generate_lyrics():
     generated_lyrics.extend(verse_2)
     generated_lyrics.extend(chorus)
     generated_lyrics.extend(bridge)
+    generated_lyrics.extend(chorus)
     lyrics = Lyrics(title=title, lyrics=generated_lyrics)
     db.session.add(lyrics)
     db.session.commit()
