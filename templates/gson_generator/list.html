@@ -14,7 +14,11 @@
 <div class="media border border-secondary my-3 p-2">
     <div class="media-body">
         <h3 class="mt-0"><a href="{{ url_for('display_lyrics', url=item.url) }}">{{ item.title }}</a></h3>
+        {% if item.lyrics[0] == "VERSE" -%}
+        <p>{{ item.lyrics[1] }}<br>{{ item.lyrics[2] }}...</p>
+        {% else -%}
         <p>{{ item.lyrics[0] }}<br>{{ item.lyrics[1] }}...</p>
+        {% endif %}
         <small>Lyrics generated on {{ item.date_created.strftime('%Y-%m-%d') }} and has been viewed {{ item.visits }}
             times.</small>
     </div>

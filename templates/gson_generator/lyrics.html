@@ -2,8 +2,18 @@
 
 {% block content %}
 <h1>{{ lyrics.title }}</h1>
+{% set verse = namespace(value=1) %}
 {% for line in lyrics.lyrics %}
-{{ line }}<br>
+    {% if line == "VERSE" -%}
+        <br><strong>Verse {{ verse.value }}:</strong><br>
+        {% set verse.value = verse.value + 1 %}
+    {% elif line == "CHORUS" -%}
+        <br><strong>Chorus:</strong><br>
+    {% elif line == "BRIDGE" -%}
+        <br><strong>Bridge:</strong><br>
+    {% else -%}
+        {{ line }}<br>
+    {% endif %}
 {% endfor %}
 
 <br>

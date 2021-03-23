@@ -3,6 +3,7 @@ from flask import Flask, render_template, url_for, redirect, request
 import requests
 from flask_sqlalchemy import SQLAlchemy
 import markovify
+import random
 import os
 
 app = Flask(__name__)
@@ -11,7 +12,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 # db.init_app(app)
 
-from models import Lyrics
+from .models import Lyrics
+from .utils import generate_lyric_segment, generate_chorus
 
 
 @app.route('/')
@@ -29,9 +31,21 @@ def generate_lyrics():
         lyric_text += lyric['lyrics'].replace('...', '') + ' '
     text_model = markovify.NewlineText(lyric_text, state_size=1)
     generated_lyrics = []
-    title = text_model.make_sentence(tries=100, max_words=7)
-    for i in range(24):
-        generated_lyrics.append(text_model.make_sentence(tries=100, max_overlap_ratio=0.6))
+    # Randomize verse size, chorus size, and title line number
+    verse_length = random.randint(4, 8)
+    chorus_length = random.randint(6, 10)
+    title_line = random.randint(0, chorus_length-1)
+    # Generate song segments
+    verse_1 = generate_lyric_segment("VERSE", verse_length, text_model)
+    verse_2 = generate_lyric_segment("VERSE", verse_length, text_model)
+    bridge = generate_lyric_segment("BRIDGE", 4, text_model)
+    chorus, title = generate_chorus(text_model, chorus_length, title_line)
+    # Put together song
+    generated_lyrics.extend(verse_1)
+    generated_lyrics.extend(chorus)
+    generated_lyrics.extend(verse_2)
+    generated_lyrics.extend(chorus)
+    generated_lyrics.extend(bridge)
     lyrics = Lyrics(title=title, lyrics=generated_lyrics)
     db.session.add(lyrics)
     db.session.commit()
